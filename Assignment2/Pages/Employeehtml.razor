@@ -1,0 +1,92 @@
+﻿@page "/Employeehtml"
+
+<h3>Add Employee</h3>
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.EntityFrameworkCore
+@using Assignment2.Data
+@using Assignment2.Models
+
+
+<head>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+</head>
+<section class="h-100 bg-light">
+    <div class="container py-5 h-100" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                        </div>
+
+                        <div class="col-xl-6">
+
+                            <EditForm Model="@_employee" OnValidSubmit="HandleValidSubmit">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase">Registration User</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.FirstName" type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="First name" name="FirstName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.LastName" type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last name" name="LastName " />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end pt-3">
+                                        <button type="submit" class="btn btn-primary btn-lg ms-2" style="margin-left: 10px">Submit form</button>
+                                    </div>
+
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+<br />
+@code {
+    public class Employee
+    {
+        [Required]
+        [StringLength(10, ErrorMessage = "Name is too long.")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(10, ErrorMessage = "Name is too long.")]
+        public string LastName { get; set; }
+
+    }
+
+    private Employee _employee = new Employee();
+    @inject AppDbContext DbContext
+    private void HandleValidSubmit()
+    {
+        var newEmployee = new Assignment2.Models.Employee
+        {
+            FirstName = _employee.FirstName,
+            LastName = _employee.LastName,
+       
+        };
+
+        DbContext.Employeed.Add(newEmployee);
+        DbContext.SaveChanges();
+
+
+        Console.WriteLine("OnValidSubmit");
+    }
+}
