@@ -29,7 +29,7 @@
                                 <ValidationSummary />
 
                                 <div class="card-body p-md-5 text-black">
-                                    <h3 class="mb-5 text-uppercase">Registration User</h3>
+                                    <h3 class="mb-5 text-uppercase">Mark Attendance</h3>
 
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
@@ -40,6 +40,23 @@
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
                                                 <input @bind-value="_employee.LastName" type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last name" name="LastName " />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.EmployeeRoll" type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last name" name="LastName " />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label for="attendance">Attendance:</label>
+                                                <input @bind="_employee.IsPresent" type="checkbox" id="attendance" name="IsPresent">
+
+                                                <label for="present">Present</label>
+                                                <input @bind="_employee.IsPresent" type="radio" id="present" name="IsPresent">
+
+                                                <label for="absent">Absent</label>
+                                                <input @bind="_employee.IsPresent" type="radio" id="absent" name="IsPresent">
                                             </div>
                                         </div>
                                     </div>
@@ -70,6 +87,13 @@
         [StringLength(10, ErrorMessage = "Name is too long.")]
         public string LastName { get; set; }
 
+        [Required]
+        [StringLength(20, ErrorMessage = "Name is too long.")]
+        public int EmployeeRoll;
+
+        [Required]
+        public bool IsPresent { get; set; }
+
     }
 
     private Employee _employee = new Employee();
@@ -80,7 +104,9 @@
         {
             FirstName = _employee.FirstName,
             LastName = _employee.LastName,
-       
+            EmployeeRoll = _employee.EmployeeRoll,
+            IsPresent = _employee.IsPresent
+
         };
 
         DbContext.Employeed.Add(newEmployee);

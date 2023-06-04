@@ -15,7 +15,6 @@ namespace Assignment2.Data
         }
 
         public DbSet<Employee> Employeed { get; set; }
-        public DbSet<Attendance> Attendances { get; set; }
        
     }
 }

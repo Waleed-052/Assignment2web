@@ -1,0 +1,188 @@
+﻿@page "/Registration"
+@using System.ComponentModel.DataAnnotations;
+
+<head>
+    <link rel="stylesheet" href="~/css/StyleSheet1.css" />
+</head>
+<img src="/css/open-iconic/registration-banner.png" class="img-fluid w-100 border-top border-info" style=" box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
+<section class="h-100 bg-light">
+    <div class="container py-5 h-100" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                        </div>
+                        <div class="col-xl-6">
+                            <EditForm Model="@_employee" OnValidSubmit="HandleValidSubmit">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase">Registration User</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.FirstName" type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="First name" name="FirstName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.LastName" type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last name" name="LastName" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.MotherName" type="text" id="form3Example1m1" class="form-control form-control-lg" placeholder="Mother's name" name="MotherName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input @bind-value="_employee.FatherName" type="text" id="form3Example1n1" class="form-control form-control-lg" placeholder="Father's name" name="FatherName" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input @bind-value="_employee.Address" type="text" id="form3Example8" class="form-control form-control-lg" placeholder="Address" name="Address" />
+                                    </div>
+
+                                    <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                                        <h6 class="mb-0 me-4">Gender: </h6>
+
+                                        <div class="form-check form-check-inline mb-0 me-4">
+                                            <input class="form-check-input" type="radio" name="Gender" id="femaleGender"
+                                                   value="Female" checked="@(_employee.Gender == "Female")" @onchange="@((args) => _employee.Gender = "Female")" />
+                                            <label class="form-check-label" for="femaleGender">Female</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline mb-0 me-4">
+                                            <input class="form-check-input" type="radio" name="Gender" id="maleGender"
+                                                   value="Male" checked="@(_employee.Gender == "Male")" @onchange="@((args) => _employee.Gender = "Male")" />
+                                            <label class="form-check-label" for="maleGender">Male</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="Gender" id="otherGender"
+                                                   value="Other" checked="@(_employee.Gender == "Other")" @onchange="@((args) => _employee.Gender = "Other")" />
+                                            <label class="form-check-label" for="otherGender">Other</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <select class="select">
+                                                <option value="1">State</option>
+                                                <option value="2">Punjab</option>
+                                                <option value="3">Sindh</option>
+                                                <option value="4">Balochistan</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <select class="select">
+                                                <option value="1">City</option>
+                                                <option value="2">Sialkot</option>
+                                                <option value="3">Lahore</option>
+                                                <option value="4">Islamabad</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input @bind-value="_employee.Course" type="text" id="form3Example99" class="form-control form-control-lg" placeholder="Course" name="Course" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input @bind-value="_employee.EmailId" type="email" id="form3Example97" class="form-control form-control-lg" placeholder="Email ID" name="EmailId" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input @bind-value="_employee.Password" type="password" id="form3Example9" class="form-control form-control-lg" placeholder="Password" name="Password" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input @bind-value="_employee.ConfirmPassword" type="password" id="form3Example90" class="form-control form-control-lg" placeholder="Confirm Password" name="ConfirmPassword" />
+                                    </div>
+
+
+
+
+
+                                    <div class="d-flex justify-content-end pt-3">
+                                        <button type="button" class="btn btn-info btn-lg">Reset all</button>
+                                        <button type="submit" class="btn btn-primary btn-lg ms-2" style="margin-left: 10px">Submit form</button>
+                                    </div>
+
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+<br />
+
+@code {
+    public class Employee
+    {
+        [Required]
+        [StringLength(20, ErrorMessage = "FirstName is too long.")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(20, ErrorMessage = "LastName is too long.")]
+        public string LastName { get; set; }
+
+        [Required]
+        [StringLength(20, ErrorMessage = "MotherName is too long.")]
+        public string MotherName { get; set; }
+
+        [Required]
+        [StringLength(20, ErrorMessage = "FatherName is too long.")]
+        public string FatherName { get; set; }
+
+        [Required]
+        public string Address { get; set; }
+
+        [Required]
+        public string Gender { get; set; }
+
+        [Required]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$",
+            ErrorMessage = "Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.")]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "The password and confirm password fields do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string Course { get; set; }
+
+        [Required]
+        public string EmailId { get; set; }
+    }
+
+    private Employee _employee = new Employee();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+    }
+}
