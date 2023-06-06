@@ -43,7 +43,7 @@
     <div class="card">
         <img class="card-img-top" src="/css/photo1.jfif" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">Mark Attendance</h5>
+            <h5 class="card-title"><a href="@NavigationManager.ToAbsoluteUri("/Login")">Mark Attendance</a></h5>
             <p class="card-text">Mark Student's Attendance according to the departments. Attendance can be edit, update and delete. All the record will saved in database. </p>
         </div>
         <div class="card-footer">
@@ -53,7 +53,7 @@
     <div class="card">
         <img class="card-img-top" src="/css/photo2.jfif" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">Check Attendance</h5>
+            <h5 class="card-title"><a href="@NavigationManager.ToAbsoluteUri("/Record")">Check Attendance</a></h5>
             <p class="card-text">System user can check all the record according to the departments. System user can edit, update and delete the record from the database.</p>
         </div>
         <div class="card-footer">
@@ -85,3 +85,7 @@
 <br />
 <br />
 
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+}
