@@ -1,6 +1,10 @@
 ﻿@page "/Registration"
 @using System.ComponentModel.DataAnnotations;
-
+@using Assignment2.Data
+@using Assignment2.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore
+@using Microsoft.SqlServer
 <head>
     <link rel="stylesheet" href="~/css/StyleSheet1.css" />
 </head>
@@ -136,10 +140,13 @@
 </section>
 <br />
 <br />
-
+@inject Microsoft.EntityFrameworkCore.DbContext DbContext
 @code {
+
     public class Employee
+
     {
+
         [Required]
         [StringLength(20, ErrorMessage = "FirstName is too long.")]
         public string FirstName { get; set; }
@@ -180,9 +187,18 @@
     }
 
     private Employee _employee = new Employee();
-
-    private void HandleValidSubmit()
+    @inject AppDbContext DbContext
+    private async Task HandleValidSubmit()
     {
-        Console.WriteLine("OnValidSubmit");
+        var userCredentials = new UserCredentials
+        {
+            Email = _employee.EmailId,
+            Password = _employee.Password
+        };
+
+        DbContext.Set<UserCredentials>().Add(userCredentials);
+        await DbContext.SaveChangesAsync();
+
+        Console.WriteLine("Registration successful");
     }
 }

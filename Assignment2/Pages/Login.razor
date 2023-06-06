@@ -8,6 +8,11 @@
 @page "/login"
 @inject SignInManager<IdentityUser> SignInManager
 @inject NavigationManager NavigationManager
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
 
 <h3>Login</h3>
 
@@ -31,6 +36,7 @@
 </EditForm>
 
 @code {
+    private string errorMessage;
     private LoginModel loginModel = new LoginModel();
 
     private async Task HandleValidSubmit()
@@ -47,12 +53,12 @@
             }
             else
             {
-                // Redirect to unauthorized access page or show an error message
+                errorMessage = "Invalid email or password. Please try again.";
             }
         }
         else
         {
-            // Show an error message for invalid login
+            errorMessage = "Invalid email or password. Please try again.";
         }
         @inject IServiceProvider serviceProvider
 
@@ -61,7 +67,6 @@
 
         if (userCredentials != null)
         {
-
             NavigationManager.NavigateTo("/Employeehtml");
         }
         else

@@ -1,0 +1,113 @@
+﻿@page "/Record"
+@using Assignment2.Data
+@using Assignment2.Models
+@using Microsoft.EntityFrameworkCore;
+@inject AppDbContext DbContext
+
+<h3>Attendance List</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Employee Roll</th>
+            <th>Present</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Employees != null)
+        {
+            foreach (var employee in Employees)
+            {
+                <tr>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.EmployeeRoll</td>
+                    <td>@(employee.IsPresent ? "Yes" : "No")</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditEmployee(employee)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteEmployee(employee)">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<EditForm Model="@_employee" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <!-- Form fields for editing employee details -->
+    <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input @bind="_employee.FirstName" type="text" class="form-control" id="FirstName" />
+    </div>
+    <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input @bind="_employee.LastName" type="text" class="form-control" id="LastName" />
+    </div>
+    <div class="form-group">
+        <label for="EmployeeRoll">Employee Roll</label>
+        <input @bind="_employee.EmployeeRoll" type="text" class="form-control" id="EmployeeRoll" />
+    </div>
+    <div class="form-group">
+        <label for="IsPresent">Present</label>
+        <input @bind="_employee.IsPresent" type="checkbox" class="form-control" id="IsPresent" />
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</EditForm>
+
+@code {
+    private List<Employee> Employees { get; set; }
+    private Employee _employee = new Employee();
+    private Employee EditedEmployee { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Employees = await DbContext.Employeed.ToListAsync();
+    }
+
+    private void EditEmployee(Employee employee)
+    {
+        _employee = new Employee
+        {
+            FirstName = employee.FirstName,
+            LastName = employee.LastName,
+            EmployeeRoll = employee.EmployeeRoll,
+            IsPresent = employee.IsPresent
+        };
+
+        EditedEmployee = employee;
+    }
+
+    private void HandleValidSubmit()
+    {
+        // Update the EditedEmployee with the values from _employee
+        EditedEmployee.FirstName = _employee.FirstName;
+        EditedEmployee.LastName = _employee.LastName;
+        EditedEmployee.EmployeeRoll = _employee.EmployeeRoll;
+        EditedEmployee.IsPresent = _employee.IsPresent;
+
+        // Save the changes to the database
+        DbContext.SaveChanges();
+
+        // Clear the _employee and EditedEmployee properties
+        _employee = new Employee();
+        EditedEmployee = null;
+    }
+
+    private void DeleteEmployee(Employee employee)
+    {
+        // Remove the employee from the database
+        DbContext.Employeed.Remove(employee);
+        DbContext.SaveChanges();
+
+        // Remove the employee from the Employees list
+        Employees.Remove(employee);
+    }
+}

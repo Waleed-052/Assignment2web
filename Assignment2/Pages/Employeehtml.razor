@@ -1,12 +1,14 @@
 ﻿@page "/Employeehtml"
-
+@inject NavigationManager NavigationManager
 <h3>Add Employee</h3>
+@using Microsoft.AspNetCore.Components
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.EntityFrameworkCore
 @using Assignment2.Data
 @using Assignment2.Models
-
-
+<hr />
+<a class="btn btn-danger" href="@NavigationManager.ToAbsoluteUri("Login")">Logout</a>
+<hr /><br />
 <head>
     <link rel="stylesheet" href="~/css/StyleSheet.css" />
 </head>
